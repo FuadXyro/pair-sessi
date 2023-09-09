@@ -1,7 +1,7 @@
 {
   "users": {
     "6283837709331@s.whatsapp.net": {
-      "exp": 45856,
+      "exp": 46588,
       "limit": 42,
       "lastclaim": 0,
       "registered": true,
@@ -13,7 +13,7 @@
       "haus": 100,
       "laper": 100,
       "stamina": 100,
-      "pc": 1694246834363,
+      "pc": 1694269033255,
       "joinlimit": -2,
       "coin": 0,
       "age": 20,
@@ -960,7 +960,7 @@
       }
     },
     "6283835148953@s.whatsapp.net": {
-      "exp": 79185,
+      "exp": 79224,
       "limit": 40,
       "lastclaim": 1693580673658,
       "registered": true,
@@ -1427,7 +1427,7 @@
       "catexp": 0
     },
     "6285726319205@s.whatsapp.net": {
-      "exp": 4772,
+      "exp": 4803,
       "limit": 38,
       "lastclaim": 0,
       "registered": true,
@@ -22495,7 +22495,7 @@
       "catexp": 0
     },
     "6287887049117@s.whatsapp.net": {
-      "exp": 76,
+      "exp": 77,
       "limit": 35,
       "lastclaim": 0,
       "registered": false,
@@ -58573,10 +58573,10 @@
       "lastSuccess": 1693641610390
     },
     "ress-tesBot.js": {
-      "total": 31,
-      "success": 31,
-      "last": 1694264411728,
-      "lastSuccess": 1694264411728
+      "total": 32,
+      "success": 32,
+      "last": 1694269991451,
+      "lastSuccess": 1694269991451
     },
     "ro-exec.js": {
       "total": 108,
@@ -58735,16 +58735,16 @@
       "lastSuccess": 1693669275503
     },
     "t-readQr.js": {
-      "total": 10,
-      "success": 3,
-      "last": 1694002980790,
-      "lastSuccess": 1694002980790
+      "total": 11,
+      "success": 4,
+      "last": 1694269319641,
+      "lastSuccess": 1694269319641
     },
     "t-qrcode.js": {
-      "total": 5,
-      "success": 3,
-      "last": 1694002968001,
-      "lastSuccess": 1694002968001
+      "total": 6,
+      "success": 4,
+      "last": 1694269314469,
+      "lastSuccess": 1694269314469
     },
     "rpg-koboy.js": {
       "total": 2,
@@ -58753,10 +58753,10 @@
       "lastSuccess": 1692889847191
     },
     "ro-exec2.js": {
-      "total": 55,
-      "success": 55,
-      "last": 1694246990346,
-      "lastSuccess": 1694246990346
+      "total": 56,
+      "success": 56,
+      "last": 1694267134458,
+      "lastSuccess": 1694267134458
     },
     "i-database.js": {
       "total": 5,
@@ -58921,16 +58921,16 @@
       "lastSuccess": 1694237382314
     },
     "t-hd.js": {
-      "total": 3,
-      "success": 3,
-      "last": 1692973595773,
-      "lastSuccess": 1692973595773
+      "total": 5,
+      "success": 5,
+      "last": 1694270219670,
+      "lastSuccess": 1694270219670
     },
     "t-remini.js": {
-      "total": 13,
-      "success": 13,
-      "last": 1694238566277,
-      "lastSuccess": 1694238566277
+      "total": 15,
+      "success": 15,
+      "last": 1694270483044,
+      "lastSuccess": 1694270483044
     },
     "rpg-mancing.js": {
       "total": 4,
@@ -58975,10 +58975,10 @@
       "lastSuccess": 1692976779862
     },
     "ro-gp.js": {
-      "total": 51,
-      "success": 51,
-      "last": 1694248495947,
-      "lastSuccess": 1694248495947
+      "total": 54,
+      "success": 54,
+      "last": 1694269230022,
+      "lastSuccess": 1694269230022
     },
     "i-bmkg.js": {
       "total": 8,
@@ -59017,16 +59017,16 @@
       "lastSuccess": 1693810332945
     },
     "src-fetch.js": {
-      "total": 20,
-      "success": 18,
-      "last": 1694188768098,
-      "lastSuccess": 1694188768098
+      "total": 21,
+      "success": 19,
+      "last": 1694270468350,
+      "lastSuccess": 1694270468350
     },
     "au-toptt.js": {
-      "total": 3,
-      "success": 3,
-      "last": 1693833194088,
-      "lastSuccess": 1693833194088
+      "total": 4,
+      "success": 4,
+      "last": 1694268821775,
+      "lastSuccess": 1694268821775
     },
     "rpg-daftarEvent.js": {
       "total": 4,
@@ -59305,16 +59305,16 @@
       "lastSuccess": 1693738970302
     },
     "t-tourl.js": {
-      "total": 21,
-      "success": 16,
-      "last": 1694264190612,
-      "lastSuccess": 1694264190612
+      "total": 22,
+      "success": 17,
+      "last": 1694270289246,
+      "lastSuccess": 1694270289246
     },
     "enable.js": {
-      "total": 19,
-      "success": 19,
-      "last": 1694248111567,
-      "lastSuccess": 1694248111567
+      "total": 20,
+      "success": 20,
+      "last": 1694267071736,
+      "lastSuccess": 1694267071736
     },
     "kyami-hii.js": {
       "total": 2,
@@ -59383,10 +59383,10 @@
       "lastSuccess": 1693667963525
     },
     "gc-listBot.js": {
-      "total": 3,
-      "success": 3,
-      "last": 1693826043438,
-      "lastSuccess": 1693826043438
+      "total": 4,
+      "success": 4,
+      "last": 1694267538016,
+      "lastSuccess": 1694267538016
     },
     "i-server.js": {
       "total": 5,
@@ -59689,9 +59689,9 @@
       "lastSuccess": 0
     },
     "dl-gdrive.js": {
-      "total": 3,
+      "total": 4,
       "success": 1,
-      "last": 1694000657966,
+      "last": 1694268716519,
       "lastSuccess": 1694000657966
     },
     "gm-akinator.js": {
@@ -59759,6 +59759,36 @@
       "success": 2,
       "last": 1694246844220,
       "lastSuccess": 1694246844220
+    },
+    "i-cuaca.js": {
+      "total": 3,
+      "success": 1,
+      "last": 1694269588059,
+      "lastSuccess": 1694269588059
+    },
+    "i-disk.js": {
+      "total": 2,
+      "success": 2,
+      "last": 1694269949408,
+      "lastSuccess": 1694269949408
+    },
+    "a-waifu.js": {
+      "total": 4,
+      "success": 4,
+      "last": 1694270144372,
+      "lastSuccess": 1694270144372
+    },
+    "t-cekreso.js": {
+      "total": 4,
+      "success": 4,
+      "last": 1694270492306,
+      "lastSuccess": 1694270492306
+    },
+    "t-resize.js": {
+      "total": 3,
+      "success": 3,
+      "last": 1694270519283,
+      "lastSuccess": 1694270519283
     }
   },
   "msgs": {},
@@ -59780,7 +59810,7 @@
       "restrict": true,
       "autorestart": true,
       "restartDB": 0,
-      "status": 1694264409860,
+      "status": 1694270525049,
       "anticall": true,
       "backup": true,
       "limitjoin": null
