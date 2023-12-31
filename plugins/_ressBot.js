@@ -5,7 +5,7 @@ const { default: { Image }} = await import('node-webpmux')
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 let [packname, ...author] = text.split('|')
 author = (author || []).join('|')
-let img = './media/ress-bot.webp'
+let img = './media/ressBot.webp'
 let stiker = await addExif(img, packname || `${namebot}`, author || `© 𝑩𝒚 𝑭𝒖𝒂𝒅𝑿𝒚࿐`)
 conn.fakeReply(m.chat, stiker, '0@s.whatsapp.net', '*Ada Apa Kak...? (｡>_<｡)*', 'status@broadcast')
 }

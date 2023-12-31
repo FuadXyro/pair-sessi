@@ -1,25 +1,15 @@
 import fetch from 'node-fetch'
 
-let handler = async (m, {conn, text, usedPrefix, command }) => {
+let handler = async (m, { text, usedPrefix, command }) => {
      if (!text) throw `Masukan nama nabi\nExample: ${usedPrefix + command} adam`
-     let url = await fetch(`https://raw.githubusercontent.com/ZeroChanBot/Api-Freee/a9da6483809a1fbf164cdf1dfbfc6a17f2814577/data/kisahNabi/${text}.json`)
-     let kisah = await url.json().catch(_ => "Error")
-     if (kisah == "Error") throw "*Not Found*\n*📮 ᴛɪᴘs :* coba jangan gunakan huruf capital"
-     
-     let hasil = `_*👳 Nabi :*_ ${kisah.name}
-_*📅 Tanggal Lahir :*_ ${kisah.thn_kelahiran}
-_*📍 Tempat Lahir :*_ ${kisah.tmp}
-_*📊 Usia :*_ ${kisah.usia}
-
-*— — — — — — — — [ K I S A H ] — — — — — — — —*
-
-${kisah.description}`
-
-     conn.reply(m.chat, hasil, m)
-
+     let pp = 'https://telegra.ph/file/1b313f53ba2178fe73847.jpg'
+     let url = await fetch(`https://raw.githubusercontent.com/FuadXyro/Zenith/main/kisahNabi/${text}.json`)
+     let kisah = await url.json()
+     let hasil = ` Nabi : ${kisah.name}\nTanggal Lahir : ${kisah.thn_kelahiran}\nTempat Lahir : ${kisah.tmp}\nUsia : ${kisah.usia}\nKisah : ${kisah.description}`
+     await conn.reply(m.chat, hasil, m, { mentionedJid: [m.sender], contextInfo: { forwardingScore: 9999, isForwarded: true, externalAdReply :{ mediaType: 1, mediaUrl: pp, title: '乂 Kisah Nabi', body: `${text}`, thumbnail: { url: pp }, thumbnailUrl: pp, sourceUrl: null, renderLargerThumbnail: true }}})
      }
 handler.help = ['kisahnabi <name>']
-handler.tags = ['islami']
+handler.tags = ['islamic']
 handler.command = /^kisahnabi$/i
 handler.register = false
 handler.limit = true

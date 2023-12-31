@@ -15,7 +15,7 @@ let handler = async (m, { conn, text, participants, isAdmin, isOwner }) => {
     let users = participants.map(u => conn.decodeJid(u.id))
     let q = m.quoted ? m.quoted : m
     let c = m.quoted ? m.quoted : m.msg
-    let negara = ['Jerman🇩🇪', 'Rusia🇷🇺', 'Brazil🇧🇷', 'Indonesia🇮🇩', 'Inggris🇬🇧', 'Prancis🇫🇷', 'Amerika Serikat🇺🇸', 'Jepang🇯🇵', 'Korea🇰🇷', 'Argentina🇦🇷', 'Tokyo❓', 'Malaysia🇲🇾', 'Arab🇸🇦', 'Palestina🇵🇸', 'Prancis🇫🇷', 'Pakistan🇵🇰', 'Albania🇦🇱', 'Madura❓', , 'Jawa❓',]
+    let negara = ['𝒁𝒆𝒏𝒊𝒕𝒉𝑩𝒐𝒕 あ⁩ ', 'Tokyo']
     let ngr = negara.getRandom()
     let fLoc = {
                 key:

@@ -1,68 +1,31 @@
-const { WAMessageStubType } = (await import('@adiwajshing/baileys')).default
-import { format } from 'util';
+const delay = time => new Promise(res => setTimeout(res, time))
 
-const isNumber = x => typeof x === 'number' && !isNaN(x)
-const delay = ms => isNumber(ms) && new Promise(resolve => setTimeout(function () {
-    clearTimeout(this)
-    resolve()
-}, ms))
+export async function before(m) {
+  if (m.isBaileys || !global.db.data.chats[m.chat]?.antiCall) return
 
-export async function all(m) {
-	if (m.fromMe && m.isBaileys) return !0
-	let text;
-	let setting = global.db.data.settings[this.user.jid]
-	if(!setting.anticall) return 
-	
-	if (m.messageStubType === (WAMessageStubType.CALL_MISSED_VOICE || WAMessageStubType.CALL_MISSED_VIDEO)) {
-		await this.reply(m.chat, `Mohon maaf kamu di blockir oleh ${namebot} karena owner menyalakan *Anti Call*\n\nHub Owner:\nwa.me/6283837709331`, null)
-		await delay(1000)
-		await this.updateBlockStatus(m.chat, "block")
-	}
+  const edtr = `🧙‍♂️ @${m.sender.split('@')[0]} 🧙‍♂️`
+  const messageType = {
+    40: '📞 Kamu telat menerima panggilan suara dan panggilan tersebut telah terlewatkan.',
+    41: '📹 Kamu telat menerima panggilan video dan panggilan tersebut telah terlewatkan.',
+    45: '📞 Kamu telat menerima panggilan suara grup dan panggilan tersebut telah terlewatkan.',
+    46: '📹 Kamu telat menerima panggilan video grup dan panggilan tersebut telah terlewatkan.'
+  }[m.messageStubType]
+
+  if (messageType) {
+    const cap = 'Kamu Di banned + block + warn + kick oleh bot karena telah melanggar aturan bot\n\n*📮Dilarang menelepon Bot!*'
+    await conn.relayMessage(m.chat, { scheduledCallCreationMessage: { callType: "VOICE", scheduledTimestampMs: Date.now(),
+title: `${edtr}\n${messageType}`}}, {})
+    await this.reply(m.chat, cap, m)
+    await delay(1000)
+    global.db.data.users[m.sender].banned = true
+    global.db.data.users[m.sender].warning = 1
+    await this.updateBlockStatus(m.sender, "block")
+    if (m.isGroup) {
+      await this.groupParticipantsUpdate(m.chat, [m.sender], "remove")
+    }
+  } else {
+    console.log({ messageStubType: m.messageStubType, messageStubParameters: m.messageStubParameters, type: m.messageStubType })
+  }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-JANGAN DI HAPUS!!
-
-
-Made By FokusDotId (Fokus ID)
-Recode By FuadXy 
-
-https://github.com/FokusDotId
-
-*/
+export const disabled = false

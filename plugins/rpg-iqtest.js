@@ -154,95 +154,95 @@ let soal = [
     jawaban: ["merah", "merkurius", "spanyol"],
     reward: { iq: 180, crystal: 90 },
   }
-];
+]
 
 function getRandomQuestion() {
-  return soal[Math.floor(Math.random() * soal.length)];
+  return soal[Math.floor(Math.random() * soal.length)]
 }
 
 const handler = async (m, { conn, text }) => {
-  conn.iqtest = conn.iqtest ? conn.iqtest : {};
-  const iqtest = conn.iqtest[m.chat];
+  conn.iqtest = conn.iqtest ? conn.iqtest : {}
+  const iqtest = conn.iqtest[m.chat]
 
   if (m.sender in conn.iqtest && iqtest.state === 'playing') {
-    return m.reply("⏳ Anda sedang berada dalam permainan. Tunggu hingga permainan selesai atau ketik \"stop\" untuk menghentikan permainan.");
+    return m.reply("⏳ Anda sedang berada dalam permainan. Tunggu hingga permainan selesai atau ketik \"stop\" untuk menghentikan permainan.")
   }
 
-  const user = global.db.data.users[m.sender];
+  const user = global.db.data.users[m.sender]
   conn.iqtest[m.chat] = {
     state: 'playing',
     currentQuestionIndex: 0,
     iq: 100,
-  };
-  const question = getRandomQuestion();
-  const currentQuestion = question.pertanyaan[0];
-  const currentAnswer = question.jawaban[0].toLowerCase();
-  const totalQuestions = soal.length; // Total number of questions
-  conn.reply(m.chat, `🧠 *Permainan Tes IQ* 🧠\n\n🌟 Mari kita mulai!\n\n🔔 Pertanyaan 1 dari ${totalQuestions}: ${currentQuestion}\n\nKetik jawaban Anda (ketik "stop" untuk menghentikan permainan):`, m);
-  conn.iqtest[m.chat].currentAnswer = currentAnswer;
-  conn.iqtest[m.chat].totalIQ = 100; // Initialize totalIQ
-};
+  }
+  const question = getRandomQuestion()
+  const currentQuestion = question.pertanyaan[0]
+  const currentAnswer = question.jawaban[0].toLowerCase()
+  const totalQuestions = soal.length // Total number of questions
+  conn.reply(m.chat, `🧠 *Permainan Tes IQ* 🧠\n\n🌟 Mari kita mulai!\n\n🔔 Pertanyaan 1 dari ${totalQuestions}: ${currentQuestion}\n\nKetik jawaban Anda (ketik "stop" untuk menghentikan permainan):`, m)
+  conn.iqtest[m.chat].currentAnswer = currentAnswer
+  conn.iqtest[m.chat].totalIQ = 100 // Initialize totalIQ
+}
 
 handler.before = async (m, { conn }) => {
-  const penalty = 10; // Penalty for wrong answers
-  conn.iqtest = conn.iqtest ? conn.iqtest : {};
-  const iqtest = conn.iqtest[m.chat];
-  if (!iqtest || iqtest.state !== 'playing') return;
-  if (m.isBaileys) return;
+  const penalty = 10 // Penalty for wrong answers
+  conn.iqtest = conn.iqtest ? conn.iqtest : {}
+  const iqtest = conn.iqtest[m.chat]
+  if (!iqtest || iqtest.state !== 'playing') return
+  if (m.isBaileys) return
   if (m.sender in conn.iqtest && iqtest.state === 'playing') {
-    return m.reply("⏳ Anda sedang berada dalam permainan. Tunggu hingga permainan selesai atau ketik \"stop\" untuk menghentikan permainan.");
+    return m.reply("⏳ Anda sedang berada dalam permainan. Tunggu hingga permainan selesai atau ketik \"stop\" untuk menghentikan permainan.")
   }
-  const currentQuestionIndex = iqtest.currentQuestionIndex;
-  const answer = m.text.trim().toLowerCase();
+  const currentQuestionIndex = iqtest.currentQuestionIndex
+  const answer = m.text.trim().toLowerCase()
 
   if (answer === 'stop') {
-    const totalQuestions = soal.length;
-    const finalScore = iqtest.iq;
-    const message = `🏁 *Permainan Selesai* 🏁\n\n🧠 Skor IQ akhir Anda adalah ${finalScore}.\n🎯 Anda telah menyelesaikan ${currentQuestionIndex} dari ${totalQuestions} pertanyaan.\n\n✨ Terima kasih telah bermain!`;
-    conn.reply(m.chat, message, m);
-    delete conn.iqtest[m.chat];
-    return;
+    const totalQuestions = soal.length
+    const finalScore = iqtest.iq
+    const message = `🏁 *Permainan Selesai* 🏁\n\n🧠 Skor IQ akhir Anda adalah ${finalScore}.\n🎯 Anda telah menyelesaikan ${currentQuestionIndex} dari ${totalQuestions} pertanyaan.\n\n✨ Terima kasih telah bermain!`
+    conn.reply(m.chat, message, m)
+    delete conn.iqtest[m.chat]
+    return
   }
 
-  const correctAnswer = iqtest.currentAnswer;
-  const reward = soal[currentQuestionIndex].reward;
+  const correctAnswer = iqtest.currentAnswer
+  const reward = soal[currentQuestionIndex].reward
 
-  const isCorrect = answer === correctAnswer;
+  const isCorrect = answer === correctAnswer
 
   if (isCorrect) {
-    iqtest.iq += reward.iq;
+    iqtest.iq += reward.iq
   } else {
-    iqtest.iq -= penalty;
+    iqtest.iq -= penalty
   }
 
-  const resultMessage = isCorrect ? '✅ *Benar!*' : '❌ *Salah!*';
+  const resultMessage = isCorrect ? '✅ *Benar!*' : '❌ *Salah!*'
   const scoreMessage = isCorrect
     ? `🎉 Anda mendapatkan ${reward.iq} poin IQ.`
-    : `⚠️ Anda kehilangan ${penalty} poin IQ.`;
+    : `⚠️ Anda kehilangan ${penalty} poin IQ.`
 
-  const totalQuestions = soal.length;
-  const totalIQ = iqtest.iq + iqtest.totalIQ; // Calculate totalIQ after each answer
-  let message = `${resultMessage}\n\n${scoreMessage}\n\n🎯 Total IQ Anda saat ini: ${totalIQ}\n\n`;
+  const totalQuestions = soal.length
+  const totalIQ = iqtest.iq + iqtest.totalIQ // Calculate totalIQ after each answer
+  let message = `${resultMessage}\n\n${scoreMessage}\n\n🎯 Total IQ Anda saat ini: ${totalIQ}\n\n`
 
-  const nextQuestionIndex = currentQuestionIndex + 1;
+  const nextQuestionIndex = currentQuestionIndex + 1
   if (nextQuestionIndex < soal.length) {
-    const nextQuestion = soal[nextQuestionIndex];
-    const currentQuestion = nextQuestion.pertanyaan[0];
-    const currentAnswer = nextQuestion.jawaban[0].toLowerCase();
-    message += `🔔 Pertanyaan ${nextQuestionIndex + 1} dari ${totalQuestions}: ${currentQuestion}\n\nKetik jawaban Anda (ketik "stop" untuk menghentikan permainan):`;
-    conn.iqtest[m.chat].currentAnswer = currentAnswer;
-    conn.iqtest[m.chat].currentQuestionIndex = nextQuestionIndex;
+    const nextQuestion = soal[nextQuestionIndex]
+    const currentQuestion = nextQuestion.pertanyaan[0]
+    const currentAnswer = nextQuestion.jawaban[0].toLowerCase()
+    message += `🔔 Pertanyaan ${nextQuestionIndex + 1} dari ${totalQuestions}: ${currentQuestion}\n\nKetik jawaban Anda (ketik "stop" untuk menghentikan permainan):`
+    conn.iqtest[m.chat].currentAnswer = currentAnswer
+    conn.iqtest[m.chat].currentQuestionIndex = nextQuestionIndex
   } else {
-    const finalScore = totalIQ; // Final score is the totalIQ
-    message += `\n⏳ Anda sudah menyelesaikan semua ${totalQuestions} soal.\n🧠 Skor IQ akhir Anda adalah ${finalScore}.\n\n🎉 Ketik "stop" untuk melihat hasil permainan.`;
-    delete conn.iqtest[m.chat];
+    const finalScore = totalIQ // Final score is the totalIQ
+    message += `\n⏳ Anda sudah menyelesaikan semua ${totalQuestions} soal.\n🧠 Skor IQ akhir Anda adalah ${finalScore}.\n\n🎉 Ketik "stop" untuk melihat hasil permainan.`
+    delete conn.iqtest[m.chat]
   }
 
-  conn.reply(m.chat, message, m);
-};
+  conn.reply(m.chat, message, m)
+}
 
-handler.help = ['iqtest'];
-handler.tags = ['rpg'];
-handler.command = /^(iqtest)$/i;
+handler.help = ['iqtest']
+handler.tags = ['rpg']
+handler.command = /^(iqtest)$/i
 
-export default handler;
+export default handler

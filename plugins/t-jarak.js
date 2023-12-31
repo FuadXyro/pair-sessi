@@ -2,12 +2,14 @@ import axios from 'axios'
 import cheerio from 'cheerio'
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-	let [from, to] = text.split`|`
-	if (!(from && to)) throw `Ex: ${usedPrefix + command} surabaya|madura`
+	let [from, to] = text.split(/[^\w\s]/g)
+	if (!(from && to)) throw `Ex: ${usedPrefix + command} jakarta|sampang`
 	let data = await jarak(from, to)
-	if (data.img) return conn.sendMessage(m.chat, { image: data.img, caption: data.desc }, { quoted: m })
+	if (data.img) return conn.sendMessage(m.chat, { image: data.img, caption: data.desc }, { quoted: fakes })
 	else m.reply(data.desc)
 }
+handler.help = ["jarak"]
+handler.tags = ["tools"]
 handler.command = ['jarak']
 
 export default handler

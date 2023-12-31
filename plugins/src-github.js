@@ -32,13 +32,13 @@ return `
 ▢ 🥃 Clone: ${repo.clone_url}
 `.trim()})
 let anunya = json.items.map((repo) => { return `https://github.com/${repo.owner.login}/${repo.name}`})
-conn.reply(m.chat, `*ɢɪᴛʜᴜʙ sᴇᴀʀᴄʜ*\n` + str, fkon, m)
+conn.reply(m.chat, `*ɢɪᴛʜᴜʙ sᴇᴀʀᴄʜ*\n` + str, fkontak, m)
 } catch {
     m.reply('*_Tidak Ditemukan_*')
   }
 }
 handler.help = ['githubsearch'].map(v => v + '')
-handler.tags = ['internet']
+handler.tags = ['search']
 
 handler.command = /^(githubsearch|ghs)$/i
 handler.register = true

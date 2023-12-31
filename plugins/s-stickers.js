@@ -28,25 +28,25 @@ let handler = async (m, {
       await m.reply(wait)
       if (/stickerMessage/g.test(mime)) {
          let img = await q.download?.()
-         stiker = await addExif(img, packnames || author, authors || m.name)
+         stiker = await addExif(img, packnames || packname, authors || m.name)
       } else if (/imageMessage/g.test(mime)) {
          let img = await q.download?.()
-         stiker = await createSticker(img, false, packnames || author, authors || m.name)
+         stiker = await createSticker(img, false, packnames || packname, authors || m.name)
       } else if (/videoMessage/g.test(mime)) {
          if ((q.msg || q).seconds > 11) return m.reply("Maksimal video durasi 10 detik!")
          let img = await q.download?.()
          stiker = await mp4ToWebp(img, {
-            pack: packnames || author,
+            pack: packnames || packname,
             authors: authors || m.name
          })
       } else if (/documentMessage/g.test(mime)) {
          let img = await q.download?.()
-         stiker = await createSticker(img, false, packnames || author, authors || m.name, 30)
+         stiker = await createSticker(img, false, packnames || packname, authors || m.name, 30)
       } else if (/viewOnceMessageV2/g.test(mime)) {
          let img = await q.download?.()
-         stiker = await sticker(img, false, packnames || author, authors || m.name)
+         stiker = await sticker(img, false, packnames || packname, authors || m.name)
       } else if (args[0] && isUrl(args[0])) {
-         stiker = await createSticker(false, args[0], packnames || author, authors || m.name, 30)
+         stiker = await createSticker(false, args[0], packnames || packname, authors || m.name, 30)
       } else if (/extendedTextMessage/g.test(mime)) {
          if (!(q.text.match(emojiRegex()) || [])[0]) return m.reply(`No emojis found in the input text!\nOr\nReply an image/video/sticker with command ${usedPrefix + command}`)
          const firstEmoji = (q.text.match(emojiRegex()) || [])[0];
@@ -55,7 +55,7 @@ let handler = async (m, {
             let res = await getEmojiGraph(cari[0])
             let emojiData = res[0].vendors
             let emj = getUrlByName(emojiData, "Whatsapp")
-            stiker = await createSticker(await (await conn.getFile(emj)).data, false, packnames || author, authors || m.name, 30)
+            stiker = await createSticker(await (await conn.getFile(emj)).data, false, packnames || packname, authors || m.name, 30)
          } else {
             await m.reply("No emojis found in the input text.");
          }

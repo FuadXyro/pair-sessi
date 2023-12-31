@@ -16,8 +16,8 @@ let handler = async (m, { conn }) => {
     }
 }
 
-handler.help = ['retrieve']
-handler.tags = ['baileys']
+handler.help = ['retrieve (reply media 1 time)']
+handler.tags = ['tools']
 handler.command = /^(retrieve|rvo)$/i
 
 export default handler

@@ -8,7 +8,7 @@ if (global.db.data.chats[m.chat].game == false && m.isGroup)
       fkontak
 )
 
-let imgr = fla.getRandom()
+let imgr = flaaa.getRandom()
 
     this.game = this.game ? this.game : {}
     let id = 'family100_' + m.chat
@@ -26,7 +26,7 @@ Terdapat *${json.jawaban.length}* jawaban${json.jawaban.find(v => v.includes(' '
     `.trim()
     this.game[id] = {
         id,
-        msg: await this.sendFile(m.chat, imgr + 'Family100', null, caption, m),
+        msg: await this.sendFile(m.chat, imgr + 'Family100', '', caption, m),
         ...json,
         terjawab: Array.from(json.jawaban, () => false),
         winScore,

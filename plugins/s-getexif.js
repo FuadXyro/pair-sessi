@@ -1,17 +1,16 @@
+import { extractMetadata } from 'wa-sticker-formatter'
 import { format } from 'util'
-const { default: { Image } } = await import('node-webpmux')
 
-let handler = async (m) => {
-    if (!m.quoted) return m.reply('Tag stikernya!')
-    if (/sticker/.test(m.quoted.mtype)) {
-        let img = new Image()
-        await img.load(await m.quoted.download())
-        m.reply(format(JSON.parse(img.exif.slice(22).toString())))
-    }
+let handler = async (m, { conn }) => {
+    if (m.quoted && /sticker/.test(m.quoted.mtype)) {
+        let img = await m.quoted.download()
+        if (!img) throw 'Can\'t extract metadata sticker!'
+        let metaData = await extractMetadata(img)
+        await m.reply(format(metaData))
+    } else throw 'Reply a sticker!'
 }
-handler.help = ['getexif']
-handler.tags = ['sticker']
-
-handler.command = ['getexif']
+handler.help = handler.alias = ['getexif']
+handler.tags = ['tools']
+handler.command = /^(getexif)$/i
 
 export default handler

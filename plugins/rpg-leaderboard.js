@@ -27,7 +27,7 @@ let handler = async (m, { conn, args, participants, usedPrefix, command }) => {
   })
   let leaderboard = leaderboards.filter(v => v && users.filter(user => user && user[v]).length)
   
-  let kled = 'https://telegra.ph/file/4cc91a89bacba9f583f3e.jpg'
+  let kled = 'https://telegra.ph/file/c1ae26e83c875224069d9.jpg'
   
   let type = (args[0] || '').toLowerCase()
   const getPage = (item) => Math.ceil((users.filter(user => user && user[item]).length) / 0)

@@ -9,6 +9,4 @@ let handler = async(m) => {
 handler.command = /^(get(pp|profile))$/i
 handler.help = ['getprofile [@users]']
 handler.tags = ['tools']
-handler.group = true
-handler.limit = true
 export default handler

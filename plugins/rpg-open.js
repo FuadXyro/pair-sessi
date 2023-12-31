@@ -1,6 +1,7 @@
 const tfinventory = {
   others: {
     money: true,
+      exp: true,
   },
   tfitems: {
     potion: true,
@@ -25,6 +26,15 @@ const tfinventory = {
     cat: 10,
     fox: 10,
     dog: 10,
+    robo: 10,
+    lion: 10,
+    rhinoceros: 10,
+    dragon: 10,
+    centaur: 10,
+    kyubi: 10,
+    griffin: 10,
+    phonix: 10,
+    wolf: 10,
   }
 }
 const rewards = {
@@ -85,15 +95,29 @@ const rewards = {
         rock: [0, 1, 0, 0],
         string: [0, 1, 0, 0]
     },
-    // pet: {
-    //     petFood: [0, 1, 0, 0, 0],
-    //     anjing: [],
-    // }
+    pet: {
+        horse: [0, 1, 0, 0, 0, 0],
+        cat: [0, 1, 0, 0],
+        fox: [0, 1, 0, 0, 0, 0],
+        dog: [0, 1, 0, 0, 0, 0, 0],
+        robo: [0, 1, 0, 0],
+        lion: [0, 1, 0, 0, 0, 0],
+        rhinoceros: [0, 1, 0, 0, 0, 0, 0, 0, 0],
+        dragon: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        centaur: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        kyubi: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        griffin: [0, 1, 0, 0, 0, 0, 0],
+        wolf: [0, 1, 0, 0, 0, 0, 0],
+        phonix: [0, 1, 0, 0, 0, 0, 0]
+    }
 }
+
 let handler = async (m, { command, args, usedPrefix }) => {
     let user = global.db.data.users[m.sender]
     const tfcrates = Object.keys(tfinventory.tfcrates).map(v => user[v] && `⮕ ${global.rpg.emoticon(v)} ${v}: ${user[v]}`).filter(v => v).join('\n').trim()
     let listCrate = Object.fromEntries(Object.entries(rewards).filter(([v]) => v && v in user))
+    
+    let thumb = 'https://telegra.ph/file/b2a98dee74ef59089b8ce.jpg'    
     let info = `🧑🏻‍🏫 ᴜsᴇʀ: *${conn.getName(m.sender)}*
 
 🔖 ᴄʀᴀᴛᴇ ʟɪsᴛ :
@@ -107,10 +131,7 @@ ${usedPrefix}open mythic 3
 `.trim()
     let type = (args[0] || '').toLowerCase()
     let count = Math.floor(isNumber(args[1]) ? Math.min(Math.max(parseInt(args[1]), 1), Number.MAX_SAFE_INTEGER) : 1) * 1
-    if (!(type in listCrate)) return conn.sendButton(m.chat, `*––––『 OPEN CRATES 』––––*`, info, './media/opcrates.jpg', [
-[`ᴄᴏᴍᴍᴏɴ`, `${usedPrefix}open common`],
-[`ᴜɴᴄᴏᴍᴍᴏɴ`, `${usedPrefix}open uncommon`]
-], m, {asLocation: true})
+    if (!(type in listCrate)) return await conn.reply(m.chat, info, m, { mentionedJid: [m.sender], contextInfo: { forwardingScore: 9999, isForwarded: true, externalAdReply :{ mediaType: 1, mediaUrl: thumb, title: `${htki} OPEN CRATES ${htka}`, body: null, thumbnail: { url: thumb }, thumbnailUrl: thumb, sourceUrl: null, renderLargerThumbnail: true }}})
     if (user[type] < count) return m.reply(`
 Your *${rpg.emoticon(type)}${type} crate* is not enough!, you only have ${user[type]} *${rpg.emoticon(type)}${type} crate*
 type *${usedPrefix}buy ${type} ${count - user[type]}* to buy
@@ -145,7 +166,6 @@ Congrats you got a epic item, which is ${pet ? `*${pet}* ${rpg.emoticon('pet')}p
 handler.help = ['open'].map(v => v + ' [crate] [count]')
 handler.tags = ['rpg']
 handler.command = /^(open|buka|gacha)$/i
-
 export default handler
 
 function isNumber(number) {

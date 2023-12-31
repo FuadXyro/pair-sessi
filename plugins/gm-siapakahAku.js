@@ -1,16 +1,16 @@
 import fetch from 'node-fetch'
-import { siapakahaku } from '@bochilteam/scraper'
+import {
+    siapakahaku
+} from '@bochilteam/scraper'
 
 let timeout = 120000
 let poin = 4999
-let handler = async (m, { conn, command, usedPrefix }) => {
-if (global.db.data.chats[m.chat].game == false && m.isGroup)
-    return conn.reply(
-      m.chat,
-      "Game Tidak Aktif Di Chat Ini\n\nSilahkan Ketik .on game\nUntuk Mengaktifkan Game ",
-      fkontak
-
-let imgr = fla.getRandom()
+let handler = async (m, {
+    conn,
+    command,
+    usedPrefix
+}) => {
+    let imgr = flaaa.getRandom()
 
     conn.siapakahaku = conn.siapakahaku ? conn.siapakahaku : {}
     let id = m.chat
@@ -19,7 +19,7 @@ let imgr = fla.getRandom()
         throw false
     }
     const json = await siapakahaku()
-    let caption = `
+    let caption = `*${command.toUpperCase()}*
 Siapakah aku? ${json.soal}
 Timeout *${(timeout / 1000).toFixed(2)} detik*
 Ketik ${usedPrefix}hsi untuk bantuan

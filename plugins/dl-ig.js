@@ -1,43 +1,47 @@
-/** JANGAN DIHAPUS KONTOL
-  * Update To Url by FuadXy
-  * Github: https://github.com/FuadBoTz-MD
-  * WhatsApp: wa.me/6283837709331
-  * Jangan Dijual Ya Ajg
-**/
+import { instagramdl } from '@bochilteam/scraper'
+import fetch from 'node-fetch'
 
-import fetch from "node-fetch";
-import got from "got";
-import cheerio from "cheerio";
-import { instagram } from "@xct007/frieren-scraper";
+var handler = async (m, { args, conn, usedPrefix, command }) => {
+    if (!args[0]) throw `Ex:\n${usedPrefix}${command} https://www.instagram.com/reel/C0EEgMNSSHw/?igshid=MzY1NDJmNzMyNQ==`
+    try {
+        let res = await bochil.snapsave(args[0])
+        let media = await res[0].url
+      
+        const sender = m.sender.split(`@`)[0]
 
-let handler = async (m, { command, usedPrefix, conn, text, args }) => {
-  try {
-    if (!text) return m.reply("Input query link");
-    m.reply("Please wait...");
+        conn.reply(m.chat, 'Sedang mengunduh video...', m)
 
-    let results = await (await fetch("https://fantox001-scrappy-api.vercel.app/instadl?url=" + text)).json();
+        if (!res) throw 'Can\'t download the post'
+      
+        await conn.sendMessage(m.chat, { video: { url: media }, caption: `ini kak videonya @${sender}`, mentions: [m.sender]}, m)
+      
+      await conn.sendMessage(m.chat, { document: { url: media }, mimetype: 'video/mp4', fileName: `instagram.mp4`, caption: `ini kak videonya @${sender} versi dokumen, agar jernih`, mentions: [m.sender] }, {quoted: m})
 
-    let caption = `*[ I N S T A G R A M ]*`;
-    let out = results.videoUrl;
+    } catch (e) {
+      try {
+          let response = await fetch(`https://wb.fuadxy99.repl.co/instagramdl?url=${encodeURIComponent(args[0])}`)
+          let data = await response.json()
 
-    await m.reply("Please wait...");
-    await conn.sendFile(m.chat, out, "", caption, m);
-  } catch (e) {
-    await m.reply("Error occurred");
-  }
-};
+          if (data.image && data.video) {
+              const sender = m.sender.split(`@`)[0]
 
-handler.help = ['instagram'];
-handler.tags = ['downloader'];
-handler.command = /^(ig(dl)?|instagram(dl)?)$/i;
+              conn.reply(m.chat, 'Sedang mengunduh video...', m)
 
-export default handler;
+            await conn.sendMessage(m.chat, { video: data.video, caption: `ini kak videonya @${sender}`, mentions: [m.sender] }, m)
 
-async function igDownload(url) {
-  return await got(url)
-    .then(response => {
-      const $ = cheerio.load(response.body);
-      const metaTags = $('meta[property="og:video:secure_url"]').attr('content');
-      return metaTags;
-    });
+            await conn.sendMessage(m.chat, { document: { url: data.video }, mimetype: 'video/mp4', fileName: `instagram.mp4`, caption: `ini kak videonya @${sender} versi dokumen, agar jernih`, mentions: [m.sender] }, {quoted: m})
+            
+          } else {
+              throw 'Gagal mengunduh video'
+          }
+      } catch (error) {
+          conn.reply(m.chat, 'Gagal mengunduh video', m)
+      }
+    }
 }
+
+handler.help = ['instagram']
+handler.tags = ['downloader']
+handler.command = /^(ig(dl)?|instagram(dl)?)$/i
+
+export default handler

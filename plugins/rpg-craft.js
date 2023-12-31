@@ -7,70 +7,56 @@ let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
   global.db.data.users[m.sender].pickaxe = global.db.data.users[m.sender].pickaxe || 0
   global.db.data.users[m.sender].pedang = global.db.data.users[m.sender].pedang || 0
   global.db.data.users[m.sender].fishingrod = global.db.data.users[m.sender].fishingrod || 0
-  let botol = global.botwm
-
-let lgocraft = `
-█▀▀▀▀█▀▀▀▀█▀▀▀▀█
-█────█────█────█
-█▄▄▄▄█▄▄▄▄█▄▄▄▄█
-█▀▀▀▀█▀▀▀▀█▀▀▀▀█
-█────█────█────█
-█▄▄▄▄█▄▄▄▄█▄▄▄▄█
-█▀▀▀▀█▀▀▀▀█▀▀▀▀█
-█────█────█────█
-█▄▄▄▄█▄▄▄▄█▄▄▄▄█`
+  let botol = global.wm
+  let thumb = 'https://telegra.ph/file/d90171fc50be54aa2e3f6.jpg'
 
   let caption = `
-▧ Pickaxe ⛏️
-▧ Sword ⚔️
-▧ Fishingrod 🎣
+█▀▀▀▀█▀▀▀▀█▀▀▀▀█
+█────█────█────█
+█▄▄▄▄█▄▄▄▄█▄▄▄▄█
+█▀▀▀▀█▀▀▀▀█▀▀▀▀█
+█────█────█────█
+█▄▄▄▄█▄▄▄▄█▄▄▄▄█
+█▀▀▀▀█▀▀▀▀█▀▀▀▀█
+█────█────█────█
+█▄▄▄▄█▄▄▄▄█▄▄▄▄█
+  
+  
+⛊ Pickaxe ⛏️
+⛊ Sword ⚔️
+⛊ Fishingrod 🎣
 
-*❏ RECIPE*
-▧ Pickaxe ⛏️
-〉 10 Kayu
-〉 5 Batu
-〉 5 Iron
-〉 20 String
+*「 RECIPE 」*
 
-▧ Sword ⚔️
-〉 10 Kayu
-〉 15 Iron
+⬡ Pickaxe ⛏️
+│• 10 Kayu
+│• 5 Batu
+│• 5 Iron
+│• 20 String
+╰────┈⭑
+⬡ Sword ⚔️
+│• 10 Kayu
+│• 15 Iron
+╰────┈⭑
+⬡ Fishingrod 🎣
+│• 10 Kayu
+│• 2 Iron
+│• 20 String
+╰────┈⭑
+⬡ Armor 🥼
+│• 30 Iron
+│• 1 Emerald
+│• 5 Diamond
+╰────┈⭑
+⬡ Atm 💳
+│• 3 Emerald
+│• 6 Diamond
+│• 10k Money
+╰────┈⭑
 
-▧ Fishingrod 🎣
-〉 10 Kayu
-〉 2 Iron
-〉 20 String
-
-▧ Armor 🥼
-〉 30 Iron
-〉 1 Emerald
-〉 5 Diamond
-
-▧ Atm 💳
-〉3 Emerald
-〉6 Diamond
-〉10k Money
+Ex:
+${usedPrefix + command} pickaxe
 `
-const sections = [
-   {
-	title: "CRAFT A TOOLS",
-	rows: [
-	    {title: "SWORD ⚔️", rowId: ".craft sword", description: "Crafting A Sword"},
-	    {title: "PICKAXE ⛏️", rowId: ".craft pickaxe", description: "Crafting A Pickaxe"},
-	    {title: "FISHINGROD 🎣", rowId: ".craft fishingrod", description: "Crafting A Fishingrod"},
-	    {title: "ARMOR 🥼", rowId: ".craft armor", description: "Crafting A Armor"},
-	    {title: "ATM 💳", rowId: ".craft atm", description: "Crafting A Atm (but that's ilegal)"},
-	]
-    },
-]
-
-const listMessage = {
-  text: caption,
-  footer: wm,
-  title: lgocraft,
-  buttonText: " C R A F T ",
-  sections
-}
 
   try {
     if (/craft|Crafting/i.test(command)) {
@@ -128,7 +114,8 @@ const listMessage = {
             break
 
           default:
-            return await conn.sendMessage(m.chat, listMessage)
+            return await conn.reply(m.chat, caption, m, { mentions: [m.sender], contextInfo: { forwardingScore: 9999, isForwarded: true, externalAdReply :{ mediaType: 1, mediaUrl: thumb, title: `${namebot}`, body: `By FuadXy`, thumbnail: { url: thumb }, thumbnailUrl: thumb, sourceUrl: null, renderLargerThumbnail: true }}})
+        
         }
     } else if (/enchant|enchan/i.test(command)) {
       const count = args[2] && args[2].length > 0 ? Math.min(99999999, Math.max(parseInt(args[2]), 1)) : !args[2] || args.length < 4 ? 1 :Math.min(1, count)
@@ -139,7 +126,7 @@ const listMessage = {
           break
 
         default:
-          return conn.sendButton( m.chat, caption, wm, null, [`⋮☰ Menu`, `.menu`], m)
+          return conn.reply( m.chat, caption, m)
       }
     }
   } catch (err) {

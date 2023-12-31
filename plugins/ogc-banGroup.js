@@ -15,6 +15,6 @@ let handler = async (m, { conn, args, isOwner, command, usedPrefix }) => {
 		})
 	}
 	
-handler.command = ['bnt']
+handler.command = ['gcbnc']
 
 export default handler

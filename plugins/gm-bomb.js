@@ -6,10 +6,7 @@ let handler = async (m, {
     command
 }) => {
 if (global.db.data.chats[m.chat].game == false && m.isGroup)
-    return conn.reply(
-      m.chat,
-      "Game Tidak Aktif Di Chat Ini\n\nSilahkan Ketik .on game\nUntuk Mengaktifkan Game ",
-      fkontak
+    return conn.reply(m.chat, "Game Tidak Aktif Di Chat Ini\n\nSilahkan Ketik .on game\nUntuk Mengaktifkan Game ", fkontak)
 
     conn.bomb = conn.bomb ? conn.bomb : {}
     let id = m.chat,

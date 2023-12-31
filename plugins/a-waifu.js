@@ -16,6 +16,6 @@ let handler = async (m, {
     await conn.sendFile(m.chat, json.url, null, "- W A I F U -", m)
 }
 handler.help = ['waifu']
-handler.tags = ['internet']
+handler.tags = ['anime']
 handler.command = /^(waifu)$/i
 export default handler

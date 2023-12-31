@@ -1,14 +1,11 @@
-let handler = m => m
-handler.all = async function (m) {
-	let chat = global.db.data.chats[m.chat]
-	if (chat.autoPesence) {
-    if (m.text) {
-      if (m.text.startsWith('.') || m.text.startsWith('#') || m.text.startsWith('!')) {
-        let ran = ['unavailable', 'available', 'composing', 'recording', 'paused', 'm.text.startsWith']
-        return this.sendPresenceUpdate(ran.getRandom(), m.chat).then(v => { this.sendMessage(m.chat, { react: { text: '💫', key: m.key }})
-        })
-      }
-    }
-  }
+export async function before(m) {
+  const chat = global.db.data.chats[m.chat]
+  if (!chat.autoPresence) return
+
+  const commands = Object.values(global.plugins).flatMap((plugin) => [].concat(plugin.command))
+  const presenceStatus = commands.some((cmd) => (cmd instanceof RegExp ? cmd.test(m.text) : m.text.includes(cmd))) ? 'composing' : 'available'
+
+  if (presenceStatus) await this.sendPresenceUpdate(presenceStatus, m.chat)
 }
-export default handler
+
+export const disabled = false

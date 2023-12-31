@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "node-fetch"
 const link = 'https://data.bmkg.go.id/DataMKG/TEWS/'
 let handler = async (m, {
   conn,
@@ -22,9 +22,9 @@ let handler = async (m, {
 		console.log(e)
 		m.reply(`[!] Fitur Error.`)
 	}
-};
-handler.command = handler.help = ['infogempa', 'bmkg', 'gempa'];
-handler.tags = ['info'];
-handler.premium = false;
-handler.limit = true;
-export default handler ;
+}
+handler.command = handler.help = ['infogempa', 'bmkg', 'gempa']
+handler.tags = ['info']
+handler.premium = false
+handler.limit = true
+export default handler

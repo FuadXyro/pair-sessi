@@ -13,10 +13,10 @@ let handler = async (m, {
         if (args.length >= 2) {
             const texts = args.slice(1).join(" ")
             const response = type === "high" ? await Encrypt(texts) : await Decrypt(texts)
-            return m.reply(response)
+            return conn.reply(m.chat, response, fkontak)
         }
 
-        return m.reply(message)
+        return conn.reply(m.chat, message, fakes)
 
     } catch (e) {
         await m.reply(eror)

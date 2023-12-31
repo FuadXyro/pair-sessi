@@ -6,10 +6,10 @@ let handler = async (m, { usedPrefix, command, text }) => {
     if (!who) return conn.reply(m.chat, `tag or mention someone!\n\nexample:\n${usedPrefix + command} @${m.sender.split`@`[0]}`, m, { mentions: [m.sender] })
     user.premium = false
     user.premiumTime = 0
-    m.reply(`✔️ successfully removed *${user.name}* from premium user`)
+    m.reply(`✓ successfully removed *${user.name}* from premium user`)
 }
-handler.help = ['delprem [@user]']
-handler.tags = ['owner']
+handler.help = ["delprem [@user]"]
+handler.tags = ["owner"]
 handler.command = /^(-|del)p(rem)?$/i
 
 handler.group = true

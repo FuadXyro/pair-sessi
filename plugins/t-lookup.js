@@ -7,7 +7,7 @@ const handler = async (m, { text, usedPrefix, command }) => {
 await m.reply(wait)
   try {
     let output = await convertRecords(text)
-        await m.reply(output)
+        await conn.reply(m.chat, output, fkontak)
   } catch (error) {
     console.log(error)
     await m.reply(eror)

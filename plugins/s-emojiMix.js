@@ -52,7 +52,7 @@ let handler = async (m, {
                 if (anu.results.length === 0) return await m.reply("*Can't mix these 2 emojis!*");
                 for (let res of anu.results) {
                     let stiker = await wibusoft.tools.makeSticker(res.url, {
-                        author: namebot,
+                        author: packname,
                         pack: name,
                         // circle: true, // default false
                         // keepScale: true, // default false
@@ -67,7 +67,7 @@ let handler = async (m, {
 
 }
 handler.help = ['emojimix'].map(v => v + ' emot1|emot2>')
-handler.tags = ['stiker']
+handler.tags = ['sticker']
 handler.command = /^(emojimix)$/i
 export default handler
 

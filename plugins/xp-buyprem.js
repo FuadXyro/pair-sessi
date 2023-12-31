@@ -1,111 +1,94 @@
-import PhoneNumber from 'awesome-phonenumber'
+let handler = async (m, { conn, text }) => {
+  let premiumList = [
+    {
+      duration: "1 DAY",
+      price: 100000000,
+      command: "1D",
+    },
+    {
+      duration: "2 DAY",
+      price: 200000000,
+      command: "2D",
+    },
+    {
+      duration: "3 DAY",
+      price: 300000000,
+      command: "3D",
+    },
+    {
+      duration: "4 DAY",
+      price: 400000000,
+      command: "4D",
+    },
+    {
+      duration: "7 DAY",
+      price: 700000000,
+      command: "7D",
+    },
+    {
+      duration: "30 DAY",
+      price: 1000000000,
+      command: "30D",
+    },
+  ]
 
-const handler = async (m, { conn, text }) => {
-  // Check if user is already premium
-  let user = global.db.data.users[m.sender];
-  let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : m.fromMe ? conn.user.jid : m.sender
+  if (!text) {
+    let listText = "*PREMIUM LIST:*\n\n"
+    premiumList.forEach((premium, index) => {
+      listText += `${index + 1}. PREMIUM ${premium.duration}\n`
+      listText += `◦  Price : *${premium.price.toLocaleString()}* Money\n`
+      listText += `◦  *Command :* .buyprem ${premium.command}\n\n`
+    })
 
-  const hargaPremium = {
-    "1": 10000, // Harga 10000 uang, mendapatkan 1 hari premium
-    "2": 20000, // Harga 20000 uang, mendapatkan 3 hari premium
-    "3": 50000, // Harga 50000 uang, mendapatkan 7 hari premium
-    "4": 100000 // Harga 100000 uang, mendapatkan 15 hari premium
-    // Tambahkan harga dan jumlahHari sesuai kebutuhan
-  };
+    conn.reply(m.chat, listText, m, {
+      contextInfo: {
+        externalAdReply: {
+          showAdAttribution: true,
+          title: `${global.namebot}`,
+          body: "Halo, silakan pilih paket premium Anda.",
+          thumbnailUrl: thumb,
+          sourceUrl: null,
+          mediaType: 1,
+          renderLargerThumbnail: true,
+        },
+      },
+    })
 
-  const input = text.trim();
-  if (!/^[1-4]$/.test(input)) {
-    return conn.reply(m.chat, `Silakan pilih angka sesuai daftar berikut:\n\n${Object.entries(hargaPremium).map(([key, harga]) => `*${key}*. Untuk *${key} hari* total *Rp.${harga.toLocaleString()}*\n\n`).join('\n')}`, m);
+    return
   }
 
-  const harga = hargaPremium[input];
-  if (!harga) return conn.reply(m.chat, "✘ *Pilihan harga tidak valid.* ( ! )", m);
+  let days = parseInt(text)
+  if (isNaN(days)) return conn.reply(m.chat, "Invalid input. Masukkan jumlah hari yang ingin Anda beli.", m)
 
-  let { key } = await conn.reply(m.chat, `
-◉ *Keanggotaan Premium* ◉
+  let selectedPremium = premiumList.find((premium) => premium.command.toLowerCase() === text.toLowerCase())
+  if (!selectedPremium) return conn.reply(m.chat, "Paket premium tidak ditemukan.", m)
 
-Tingkatkan keanggotaan premium dan nikmati manfaat eksklusif!
+  let user = global.db.data.users[m.sender]
+  if (!user) return conn.reply(m.chat, "Anda tidak terdaftar.", m)
 
-◦ *Nomor* : ${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}
-° *ID* : ${m.id}
-° *Harga:* *Rp.${harga.toLocaleString()}*
+  let money = user.money || 0
+  let price = selectedPremium.price * days
+  if (money < price) return conn.reply(m.chat, "Money tidak mencukupi.", m)
 
-Balas dengan *Y* untuk meningkatkan keanggotaan premium atau *N* untuk membatalkan.
-  `, m);
+  user.premium = true
+  user.premiumDate = Date.now() + days * 24 * 60 * 60 * 1000
+  user.limit += days
 
-  conn.buyprem[m.chat] = { list: input, hargaPremium, key };
-};
+  conn.sendMessage(m.chat, {
+    react: {
+      text: '🕒',
+      key: m.key,
+    },
+  })
 
-handler.before = async (m, { conn }) => {
-  conn.buyprem = conn.buyprem || {};
+  user.money -= price
 
-  if (m.isBaileys || !(m.chat in conn.buyprem)) return;
-
-  let user = global.db.data.users[m.sender];
-
-  const input = m.text.trim().toUpperCase();
-  if (!/^[YN]$/i.test(input)) return;
-
-  const { list, key, hargaPremium } = conn.buyprem[m.chat];
-  const harga = hargaPremium[list];
-
-  if (!m.quoted || m.quoted.id !== key.id || !m.text) return;
-
-  if (input === 'Y') {
-    if (user.money < harga) {
-      return conn.reply(m.chat, "✘ *Anda membutuhkan setidaknya 10000 uang untuk menjadi pengguna premium.* ( ! )", m);
-    }
-
-    user.money -= harga;
-    var jumlahHari = 86400000 * list;
-    var now = new Date() * 1;
-
-    user.premiumTime = user.premiumTime || now;
-    user.premiumTime += jumlahHari;
-
-    if (!user.premium) user.premium = true;
-
-    let message = user.premium
-      ? `🥳 *Success! Buy Premium*
-*Name :* ${m.name}
-*Countdown :* ${getCountdownText(now, user.premiumTime)}
-
-Hei.. ${m.name} Jgn lupa minta giftcode premium dari owner ya:3\nMintanya lewat PrivateChat kalo ngga, gak akan di tanggapi😁
-
-${namebot} By ${author}`
-      : `🥳 *Success! Buy Premium*
-*Name :* ${m.name}
-*Countdown :* ${getCountdownText(now, user.premiumTime)}
-
-Hei.. ${m.name} Jgn lupa minta giftcode premium dari owner ya:3\nMintanya lewat PrivateChat kalo ngga, gak akan di tanggapi😆`;
-      
-    conn.reply(m.chat, message, m);
-    clearTimeout(conn.buyprem[m.chat].timeout);
-  } else if (input === 'N') {
-    conn.reply(m.chat, "✓ *Anda telah membatalkan peningkatan premium.* ✓", m);
-    delete conn.buyprem[m.chat];
-  }
-};
-
-handler.help = ["buyprem"];
-handler.tags = ["xp"];
-handler.command = /^buyprem$/i;
-
-export default handler;
-
-function getCountdownText(now, premiumTime) {
-  let remainingTime = premiumTime - now;
-  let days = Math.floor(remainingTime / 86400000);
-  let hours = Math.floor((remainingTime % 86400000) / 3600000);
-  let minutes = Math.floor((remainingTime % 3600000) / 60000);
-  let seconds = Math.floor((remainingTime % 60000) / 1000);
-
-  let countdownText = "";
-
-  if (days > 0) countdownText += `${days} hari `;
-  if (hours > 0) countdownText += `${hours} jam `;
-  if (minutes > 0) countdownText += `${minutes} menit `;
-  if (seconds > 0) countdownText += `${seconds} detik`;
-
-  return countdownText.trim();
+  conn.reply(m.chat, `Anda telah berhasil membeli *${selectedPremium.duration}* Premium.\nSetelah membeli, jangan membeli lagi, karena akan membuat premium sebelumnya hangus.`, m)
 }
+
+handler.command = /^buyprem$/i
+handler.help = ["buyprem [duration]"]
+handler.tags = ["xp"]
+handler.register = true
+
+export default handler

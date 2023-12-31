@@ -1,27 +1,37 @@
-import fs from 'fs';
-import path, { dirname } from 'path';
-import { pathToFileURL, fileURLToPath } from 'url';
+import pkg from '@adiwajshing/baileys'
+const { MessageType } = pkg
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+let handler = async (m, { conn, text }) => {
+    if (!text) {
+        throw 'Siapa yang ingin dijadikan Moderator Bot?'
+    }
 
-let handler = async (m, { conn, args }) => {
-    const json = JSON.parse(fs.readFileSync('./settings/moderator.json'));
-    let who;
-    if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : args[0] ? args[0].replace(/[^0-9]/g, '') + "@s.whatsapp.net" : null;
-    else who = args[0] ? args[0].replace(/[^0-9]/g, '') + "@s.whatsapp.net" : null;
-    if (!who) throw "Siapa yg mau diangkat jadi moderator?";
-    if (json.find(v => v[0] == who.split('@')[0])) throw `${await conn.getName(who)} sudah menjadi moderator!`;
-    json.push([`${who.split("@")[0]}`]); // push to json
-    fs.writeFileSync('./settings/moderator.json', JSON.stringify(json)); // write to json
-    await m.reply(`@${who.split("@")[0]} sekarang moderator!`);
+    let who
 
-    let file = pathToFileURL(path.join(__dirname, "../config.js")).href;
-    import(`${file}?update=${Date.now()}`).then(() => console.log("reload config file done"));
-};
-handler.help = ['addmods @user']
+    if (m.isGroup) {
+        who = m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+    } else {
+        who = m.sender
+    }
+
+    const userNumber = who.split('@')[0]
+
+    if (global.mods.includes(userNumber)) {
+        throw 'Pengguna tersebut sudah menjadi Moderator!'
+    }
+
+    global.mods.push(userNumber)
+
+    conn.reply(m.chat, `Hai, @${userNumber}. Kamu sudah menjadi Moderator. Mohon jangan disalahgunakan atau akan dicabut!`, m, {
+        contextInfo: {
+            mentionedJid: [who]
+        }
+    })
+}
+
+handler.help = ['addmods <@user>']
 handler.tags = ['developer']
-handler.command = /^(add|tambah|\+)mo(ds)?$/
-
+handler.command = /^(add|tambah|\+)mods$/i
 handler.rowner = true
 
 export default handler

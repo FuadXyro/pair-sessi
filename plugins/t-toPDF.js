@@ -10,7 +10,7 @@ let handler = async (m, {
     command
 }) => {
     // Usage example
-    let query = `input text\nEx. *.${command}* hello world\n<command> <text>`
+    let query = `input text\nEx. *.${command}* fuadxy`
     let text
     if (args.length >= 1) {
         text = args.slice(0).join(" ")

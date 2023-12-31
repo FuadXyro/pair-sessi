@@ -4,7 +4,7 @@ import { generateWAMessageFromContent } from "@adiwajshing/baileys"
 let handler  = async (m, { conn }) => {
 
  let pp = 'https://tinyurl.com/24u64tky'
- let fxy = 'https://telegra.ph/file/93b22cdaf16e8c2b7ce83.jpg'
+ let fxy = 'https://telegra.ph/file/3ad0d2b2650e3665e79e3.jpg'
   try {
     pp = await conn.profilePictureUrl(m.sender, 'image')
   } catch (e) {
@@ -15,7 +15,7 @@ let msg = await generateWAMessageFromContent(m.chat, { locationMessage: {
   degreesLongitude: 0,
   name: '𝗖𝗟𝗜𝗖𝗞 𝗛𝗘𝗥𝗘',
   address: wm,
-  url: 'https://chat.whatsapp.com/EAR7T7H59vOJz8KcwMP179',
+  url: sgc,
   isLive: true,
   accuracyInMeters: 0,
   speedInMps: 0,
@@ -27,6 +27,8 @@ let msg = await generateWAMessageFromContent(m.chat, { locationMessage: {
 return conn.relayMessage(m.chat, msg.message, {})
 }
 
+handler.help = ["gcbot"]
+handler.tags = ["info"]
 handler.command = /^gcbot$/
 handler.owner = false
 export default handler

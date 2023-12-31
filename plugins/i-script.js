@@ -2,7 +2,7 @@ import moment from 'moment-timezone'
 import fetch from 'node-fetch'
 
 let handler = async (m, { conn, args }) => {
-   let res = await fetch('https://api.github.com/repos/FuadBoTz-MD/Zura-MD')
+   let res = await fetch('https://api.github.com/repos/FuadXyro/PairingCode')
    let pp = 'https://telegra.ph/file/344ca06078289bb8fe8dc.jpg'
    let link = 'https://chat.whatsapp.com/EAR7T7H59vOJz8KcwMP179'
    let json = await res.json()
@@ -27,7 +27,7 @@ let info = `
 • ᴊɪᴋᴀ ᴍᴇɴᴇᴍᴜᴋᴀɴ ʙᴜɢ ᴅɪ sᴄʀɪᴘᴛ, ʜᴀʀᴀᴘ ʟᴀᴘᴏʀ ᴏᴡɴᴇʀ
 • ʙᴏᴛ sᴇᴡᴀ ᴏɴʟʏ ʙᴜᴋᴀɴ ʙᴏᴛ ɢʀᴀᴛɪsᴀɴ, ᴋᴀʟᴏ ᴍᴀᴜ ᴍᴇᴍᴀsᴜᴋᴋᴀɴ ᴋᴇ ɢʀᴜᴘ ʟᴀɪɴ ᴍɪɴᴛᴀ ɪᴢɪɴ ᴏᴡɴᴇʀ ᴅᴜʟᴜ ʏᴀ :)
 `
-await conn.reply(m.chat, info, m, { mentions: [m.sender], contextInfo: { forwardingScore: 9999, isForwarded: true, externalAdReply :{ mediaType: 1, mediaUrl: pp, title: '乂 ғᴜᴀᴅ-ᴍᴅ ᴠ⁷彡', thumbnail: { url: pp }, thumbnailUrl: pp, sourceUrl: link, renderLargerThumbnail: true }}})
+await conn.reply(m.chat, info, m, { mentions: [m.sender], contextInfo: { forwardingScore: 9999, isForwarded: true, externalAdReply :{ mediaType: 1, mediaUrl: pp, title: `${namebot}`, body: `${author}`, thumbnail: { url: pp }, thumbnailUrl: pp, sourceUrl: link, renderLargerThumbnail: true }}})
 }
 
 handler.help = ['scbot']

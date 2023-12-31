@@ -20,17 +20,18 @@ let source = await jimp.read(await link)
 let height = await source.getHeight()
 let width = await source.getWidth()
 
-let reso = `_*${hsquere[0]} RESOLUTION :*_ ${width} x ${height}
+
+let reso = `_*⛶ RESOLUTION :*_ ${width} x ${height}
 
 > ᴡɪᴅᴛʜ : ${width}
 > ʜᴇɪɢʜᴛ : ${height}
 
 > ʟɪɴᴋ : ${link}
 > sʜᴏʀᴛ ʟɪɴᴋ : ${await shortUrl(link)}`
-conn.reply(m.chat, reso, m, { contextInfo: { isForwarded: false, forwardingScore: 9999, externalAdReply :{ mediaType: 1, mediaUrl: link, title: `${namebot}`, body: `By ${author}`, thumbnail: { url: link }, thumbnailUrl: link, renderLargerThumbnail: true }}})
+conn.reply(m.chat, reso, fakes, { contextInfo: { isForwarded: false, forwardingScore: 9999, externalAdReply :{ mediaType: 1, mediaUrl: link, title: `${namebot}`, body: `By ${author}`, thumbnail: { url: link }, thumbnailUrl: link, renderLargerThumbnail: true }}})
 }
 handler.help = ['cekresolution <reply | caption>', 'cekreso <reply | caption>']
-handler.tags = ['tool']
+handler.tags = ['tools']
 handler.command = /^(cekreso(lution)?)$/i
 
 export default handler

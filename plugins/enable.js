@@ -12,15 +12,16 @@ let fxy = `
 ◉ antilinkall
 ◉ antiphising
 ◉ antisticker
+◉ antiviewonce
 ◉ antidelete
 ◉ antivn
 ◉ antivirtex
 ◉ antivirus
 ◉ autosticker
 ◉ autolevelup
-◉ antirpg
 ◉ antigame
 ◉ antiluar
+◉ anticall
 ◉ adminonly
 ◉ autopersence
 ◉ autodelvn
@@ -52,7 +53,7 @@ ${usedPrefix}${command} welcome
   let isEnable = /true|enable|(turn)?on|1/i.test(command)
   let named = conn.getName(m.sender)
   let fkon = { key: { fromMe: false, participant: `${m.sender.split`@`[0]}@s.whatsapp.net`, ...(m.chat ? { remoteJid: '0@s.whatsapp.net' } : {}) }, message: { contactMessage: { displayName: `${named}`, vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;a,;;;\nFN:${named}\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`}}}
-  let kled = 'https://telegra.ph/file/c4788912ab6567017ef2c.jpg'
+  let kled = 'https://telegra.ph/file/6ddedfab5e54c93c6d3c5.jpg'
   let chat = global.db.data.chats[m.chat]
   let user = global.db.data.users[m.sender]
   let bot = global.db.data.settings[conn.user.jid] || {}
@@ -155,15 +156,14 @@ ${usedPrefix}${command} welcome
        break
        
   	case 'antibot':
-  		if (!m.isGroup) {
-  			global.dfail('group', m, conn)
-  			throw false;
-  		} else if (!(isAdmin || isOwner)) {
-  			global.dfail('admin', m, conn)
-  			throw false;
-  		}
-  		chat.antiBot = isEnable
-  	break
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
+          global.dfail('admin', m, conn)
+          throw false
+        }
+      }
+      chat.antiBot = isEnable
+      break
   	
     case 'welcome':
         if (!m.isGroup) {
@@ -253,6 +253,16 @@ ${usedPrefix}${command} welcome
       chat.antiSpam = isEnable
       break
       
+    case 'viewonce':
+			if (m.isGroup) {
+				if (!(isAdmin || isOwner)) {
+					global.dfail('admin', m, conn)
+					throw false
+				}
+			}
+			chat.viewonce = isEnable
+			break
+      
     case 'antidelete':
       if (m.isGroup) {
         if (!(isAdmin || isOwner)) {
@@ -262,6 +272,16 @@ ${usedPrefix}${command} welcome
       }
       chat.delete = !isEnable
       break
+      
+     case 'anticall':
+       if (m.isGroup) {
+         if (!(isAdmin || isOwner)) {
+           global.dfail('admin', m, conn)
+           throw false
+         }
+       }
+       chat.antiCall = isEnable
+       break
       
      case 'document':
        chat.useDocument = isEnable
@@ -420,7 +440,7 @@ ${usedPrefix}${command} welcome
       break
       
     default:
-      if (!/[01]/.test(command)) return await conn.reply(m.chat, fxy, m, { contextInfo: { mentionedJid: [m.sender], forwardingScore: 9999, isForwarded: true, externalAdReply: { mediaType: 1, mediaUrl: thumb2, title: ']=======❏ OPTIONS ❏=======[', thumbnail: { url: thumb2 }, thumbnailUrl: thumb2, sourceUrl: false, renderLargerThumbnail: true }}})
+      if (!/[01]/.test(command)) return await conn.reply(m.chat, fxy, m, { contextInfo: { mentionedJid: [m.sender], forwardingScore: 9999, isForwarded: true, externalAdReply: { mediaType: 1, mediaUrl: kled, title: ']=======❏ OPTIONS ❏=======[', thumbnail: { url: kled }, thumbnailUrl: kled, sourceUrl: false, renderLargerThumbnail: true }}})
       throw false
   }
   

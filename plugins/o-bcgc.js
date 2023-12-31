@@ -43,7 +43,7 @@ let handler = async (m, { conn,isOwner, isROwner, text }) => {
     if(!pesan) throw 'Imput text!'
     m.reply(`ぞ 𝚂𝚎𝚍𝚊𝚗𝚐 𝙼𝚎𝚗𝚐𝚒𝚛𝚒𝚖 𝙿𝚎𝚜𝚊𝚗 𝙱𝚛𝚘𝚊𝚍𝚌𝚊𝚜𝚝 𝙺𝚎 ${anu.length} 𝙶𝚛𝚘𝚞𝚙𝚜, 𝚆𝚊𝚔𝚝𝚞 𝚂𝚎𝚕𝚎𝚜𝚊𝚒 ${anu.length * 0.5} 𝚍𝚎𝚝𝚒𝚔`)
     let bcbg = 'https://telegra.ph/file/f7d7c05945be0a68e0503.jpg'
-    let gc = 'https://chat.whatsapp.com/KGxRWkljtCu3uaWzwxvarR'
+    let gc = `${sgc}`
     for (let i of anu) {
   conn.sendMessage(i, {
 text: `${pesan}`,

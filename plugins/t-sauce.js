@@ -20,6 +20,6 @@ let handler = async (m, { conn}) => {
 
 handler.help = ['sauce <reply/send image>']
 handler.tags = ['tools']
-handler.command = /^(sauce|source)$/i
+handler.command = /^(sauce)$/i
 
 export default handler

@@ -32,12 +32,12 @@ if(!args[0]) throw "Masukkan Nama Lokasi"
          `.trim()
         
 //conn.sendVinButtonLoc(m.chat, await conn.resize(pp, 300, 180), caption, 'Thank you Dave ×͜× & ᴋʏᴀᴍɪ×͜×࿐ for developing this bot so well', 'instagram', 'https://instagram.com/fuadxy99', 'Donasi', '.pay', m)//
-await conn.reply(m.chat, caption, fgif, { contextInfo: { isForwarded: true, forwardingScore: 9999, externalAdReply :{ mediaType: 1, mediaUrl: pp, title: `Info Cuaca `, thumbnail: { url: pp }, thumbnailUrl: pp, renderLargerThumbnail: true }}})
+await conn.reply(m.chat, caption, fakes, { contextInfo: { isForwarded: true, forwardingScore: 9999, externalAdReply :{ mediaType: 1, mediaUrl: pp, title: `Cuaca di ${name}`, thumbnail: { url: pp }, thumbnailUrl: pp, renderLargerThumbnail: true }}})
 }
 
-handler.help = ['infocuaca <city>']
+handler.help = ['cuaca <city>']
 handler.tags = ['info']
-handler.command = /^(infocuaca|weather)$/i
+handler.command = /^(cuaca|weather)$/i
 handler.limit = true
 
 export default handler

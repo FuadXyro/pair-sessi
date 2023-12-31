@@ -17,16 +17,14 @@ const { name, author } = require(join(__dirname, './package.json')) // https://w
 const { say } = cfonts
 const rl = createInterface(process.stdin, process.stdout)
 
-say('ZenithBot', {
-font: 'chrome',
+say('ZenithBotz', {
+font: 'tiny',
 align: 'center',
 gradient: ['red', 'magenta']})
 say(`Updated FuadXy`, {
 font: 'console',
 align: 'center',
 gradient: ['red', 'magenta']})
-
-
 
   
 var isRunning = false
@@ -74,7 +72,7 @@ function start(file) {
   })
   p.on('exit', (_, code) => {
     isRunning = false
-    console.error('Error Cuy:', code)
+    console.error('(❗) Error:', code)
     if (code === 0) return
     watchFile(args[0], () => {
       unwatchFile(args[0])
