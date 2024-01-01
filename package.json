@@ -1,124 +1,43 @@
+/* 
+ /************************* 
+ * Pake tinggal make 
+ * jangan hapus sumbernya 
+ ************************** 
+ * Github: FuadXyro
+ * Wa: 083138381932 
+ */
 {
-    "name": "FuadXyro",
-    "version": "0.0.1",
-    "description": "WhatsApp Bot Multi Device With ESM Module",
-    "main": "index.js",
-    "type": "module",
-    "directories": {
-        "lib": "lib",
-        "src": "src",
-        "plugins": "plugins"
-    },
-    "scripts": {
-        "build": "npm install",
-        "start": "NODE_ENV=production node index.js",
-        "dev": "NODE_ENV=development nodemon index.js",
-        "test": "node test.js",
-        "test2": "nodemon index.js"
-    },
-    "keywords": [
-        "termux-whatsapp-bot",
-        "whatsapp-bot",
-        "whatsapp",
-        "js-whatsapp",
-        "whatsapp",
-        "Games-wabot",
-        "wabot-aq",
-        "multi-device",
-        "MD",
-        "baileys-md"
-    ],
-    "homepage": "https://github.com/FuadXyro",
-    "author": {
-        "name": "FuadXyro"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/FuadXyro/PairingCode.git"
-    },
-    "bugs": {
-        "url": "https://github.com/FuadXyro/PairingCode/issues"
-    },
-    "license": "GPL-3.0-or-later",
-    "dependencies": {
-        "@adiwajshing/baileys": "npm:@whiskeysockets/baileys",
-        "@adiwajshing/keyed-db": "^0.2.4",
-        "@bochilteam/scraper": "^3.0.0",
-        "@vitalets/google-translate-api": "^8.0.0",
-        "api-dylux": "*",
-        "awesome-phonenumber": "*",
-        "axios": "*",
-        "brainly-scraper-v2": "*",
-        "canvacord": "*",
-        "canvafy": "*",
-        "cfonts": "*",
-        "chalk": "*",
-        "chalk-animation": "*",
-        "cheerio": "*",
-        "child_process": "*",
-        "crypto": "*",
-        "didyoumean": "*",
-        "discord.js": "^14.14.1",
-        "emoji-api": "*",
-        "express": "*",
-        "file-type": "*",
-        "fluent-ffmpeg": "*",
-        "form-data": "*",
-        "formdata-node": "*",
-        "fs": "*",
-        "genius-lyrics": "*",
-        "google-it": "*",
-        "google-play-scraper": "*",
-        "got": "*",
-        "human-readable": "*",
-        "hxz-api": "*",
-        "imagemaker.js": "*",
-        "javascript-obfuscator": "*",
-        "jimp": "*",
-        "js-beautify": "*",
-        "jsdom": "*",
-        "knights-canvas": "*",
-        "lolcatjs": "*",
-        "lowdb": "^3.0.0",
-        "megajs": "*",
-        "mime-types": "*",
-        "moment-timezone": "*",
-        "mongoose": "*",
-        "node-fetch": "*",
-        "node-gtts": "*",
-        "node-os-utils": "*",
-        "node-webpmux": "*",
-        "node-zip": "*",
-        "nodemailer": "*",
-        "nodemon": "*",
-        "object-query-string": "*",
-        "openai": "*",
-        "os": "*",
-        "path": "*",
-        "pdfkit": "*",
-        "perf_hooks": "*",
-        "pino": "*",
-        "qrcode": "*",
-        "qrcode-reader": "*",
-        "qrcode-terminal": "*",
-        "qs": "*",
-        "replicate": "*",
-        "sagiri": "*",
-        "similarity": "*",
-        "socket.io": "*",
-        "spinnies": "*",
-        "syntax-error": "*",
-        "terminal-image": "*",
-        "terser": "*",
-        "url": "*",
-        "url-regex": "*",
-        "url-regex-safe": "*",
-        "util": "*",
-        "wa-sticker-formatter": "*",
-        "wibusoft": "*",
-        "yargs": "*",
-        "yt-search": "*",
-        "ytdl-core": "*",
-        "zs-extract": "*"
-    }
+  "name": "FuadXyro",
+  "version": "1.0.0",
+  "description": "Connect Whatsapp With Baileys Code Pairing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "baileys",
+    "code-pairing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FuadXyro/pair-sessi.git"
+  },
+  "author": "FuadXy",
+  "license": "ISC",
+  "dependencies": {
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "@colors/colors": "1.5.0",
+    "@whiskeysockets/baileys": "^6.5.0",
+    "cfonts": "~2.10.0",
+    "chalk": "~4.1.0",
+    "fs-extra": "^11.1.1",
+    "path": "^0.12.7",
+    "pino": "^8.1.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "bugs": {
+    "url": "https://github.com/FuadXyro/pair-sessi/issues"
+  },
+  "homepage": "https://github.com/FuadXyro/pair-sessi/#readme"
 }

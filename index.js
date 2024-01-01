@@ -1,90 +1,133 @@
-console.log('🕖 Starting...')
-
-import { join, dirname } from 'path'
-import { createRequire } from "module";
-import { fileURLToPath } from 'url'
-import { setupMaster, fork } from 'cluster'
-import { watchFile, unwatchFile } from 'fs'
-import cfonts from 'cfonts';
-import chalkAnimation from 'chalk-animation'
-import { createInterface } from 'readline'
-import yargs from 'yargs'
-
-// https://stackoverflow.com/a/50052194
-const __dirname = dirname(fileURLToPath(import.meta.url))
-const require = createRequire(__dirname) // Bring in the ability to create the 'require' method
-const { name, author } = require(join(__dirname, './package.json')) // https://www.stefanjudis.com/snippets/how-to-import-json-files-in-es-modules-node-js/
-const { say } = cfonts
-const rl = createInterface(process.stdin, process.stdout)
-
-say('ZenithBotz', {
-font: 'tiny',
-align: 'center',
-gradient: ['red', 'magenta']})
-say(`Updated FuadXy`, {
-font: 'console',
-align: 'center',
-gradient: ['red', 'magenta']})
-
-  
-var isRunning = false
-/**
- * Start a js file
- * @param {String} file `path/to/file`
+/* 
+ /************************* 
+ * Pake tinggal make 
+ * jangan hapus sumbernya 
+ ************************** 
+ * Github: FuadXyro
+ * Wa: 083138381932 
  */
-function start(file) {
-  if (isRunning) return
-  isRunning = true
-  let args = [join(__dirname, file), ...process.argv.slice(2)]
-  say([process.argv[0], ...args].join(' '), {
-    font: 'console',
-    align: 'center',
-    gradient: ['red', 'magenta']})
-  say('Sabar Ya Kak Hihihi...', {
-    font: 'console',
-    align: 'center',
-    gradient: ['red', 'magenta']})
-  say('Lagi Memuat Plugins Kak...', {
-    font: 'console',
-    align: 'center',
-    gradient: ['red', 'magenta']})
-  say('Dah Tinggal Tunggu Kak Mwehehe', {
-    font: 'console',
-    align: 'center',
-    gradient: ['blue', 'magenta']})
-  setupMaster({
-    exec: args[0],
-    args: args.slice(1),
-  })
-  let p = fork()
-  p.on('message', data => {
-    console.log('[RECEIVED]', data)
-    switch (data) {
-      case 'reset':
-        p.process.kill()
-        isRunning = false
-        start.apply(this, arguments)
-        break
-      case 'uptime':
-        p.send(process.uptime())
-        break
-    }
-  })
-  p.on('exit', (_, code) => {
-    isRunning = false
-    console.error('(❗) Error:', code)
-    if (code === 0) return
-    watchFile(args[0], () => {
-      unwatchFile(args[0])
-      start(file)
-    })
-  })
-  let opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
-  if (!opts['test'])
-    if (!rl.listenerCount()) rl.on('line', line => {
-      p.emit('message', line.trim())
-    })
-  // console.log(p)
-}
+const makeWASocket = require("@whiskeysockets/baileys").default
+const qrcode = require("qrcode-terminal")
+const fs = require('fs')
+const pino = require('pino')
+const { delay, useMultiFileAuthState, BufferJSON, fetchLatestBaileysVersion, PHONENUMBER_MCC, DisconnectReason, makeInMemoryStore, jidNormalizedUser, makeCacheableSignalKeyStore } = require("@whiskeysockets/baileys")
+const Pino = require("pino")
+const NodeCache = require("node-cache")
+const chalk = require("chalk")
+const readline = require("readline")
+const { parsePhoneNumber } = require("libphonenumber-js")
 
-start('main.js')
+
+let phoneNumber = "6283138381932"
+
+const pairingCode = !!phoneNumber || process.argv.includes("--pairing-code")
+const useMobile = process.argv.includes("--mobile")
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
+const question = (text) => new Promise((resolve) => rl.question(text, resolve))
+
+
+  async function qr() {
+//------------------------------------------------------
+let { version, isLatest } = await fetchLatestBaileysVersion()
+const {  state, saveCreds } =await useMultiFileAuthState(`./sessions`)
+    const msgRetryCounterCache = new NodeCache() // for retry message, "waiting message"
+    const FuadXyro = makeWASocket({
+        logger: pino({ level: 'silent' }),
+        printQRInTerminal: !pairingCode, // popping up QR in terminal log
+      mobile: useMobile, // mobile api (prone to bans)
+      browser: ['Chrome (Linux)', '', ''], // for this issues https://github.com/WhiskeySockets/Baileys/issues/328
+     auth: {
+         creds: state.creds,
+         keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
+      },
+      browser: ['Chrome (Linux)', '', ''], // for this issues https://github.com/WhiskeySockets/Baileys/issues/328
+      markOnlineOnConnect: true, // set false for offline
+      generateHighQualityLinkPreview: true, // make high preview link
+      getMessage: async (key) => {
+         let jid = jidNormalizedUser(key.remoteJid)
+         let msg = await store.loadMessage(jid, key.id)
+
+         return msg?.message || ""
+      },
+      msgRetryCounterCache, // Resolve waiting messages
+      defaultQueryTimeoutMs: undefined, // for this issues https://github.com/WhiskeySockets/Baileys/issues/276
+   })
+
+
+    // login use pairing code
+   // source code https://github.com/WhiskeySockets/Baileys/blob/master/Example/example.ts#L61
+   if (pairingCode && !FuadXyro.authState.creds.registered) {
+      if (useMobile) throw new Error('Cannot use pairing code with mobile api')
+
+      let phoneNumber
+      if (!!phoneNumber) {
+         phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
+
+         if (!Object.keys(PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
+            console.log(chalk.bgBlack(chalk.redBright("❗ Mulailah dengan kode negara Nomor WhatsApp Anda, Contoh : +6283138381932")))
+            process.exit(0)
+         }
+      } else {
+         phoneNumber = await question(chalk.bgBlack(chalk.greenBright(` ⚡ Silakan ketik nomor WhatsApp Anda\nMisalnya: +6283138381932 : `)))
+         phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
+
+         // Ask again when entering the wrong number
+         if (!Object.keys(PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
+            console.log(chalk.bgBlack(chalk.redBright("Mulailah dengan kode negara Nomor WhatsApp Anda, Contoh : +6283138381932")))
+
+            phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`🎭 Silakan ketik nomor WhatsApp Anda\nMisalnya: +6283138381932 : `)))
+            phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
+            rl.close()
+         }
+      }
+
+      setTimeout(async () => {
+         let code = await FuadXyro.requestPairingCode(phoneNumber)
+         code = code?.match(/.{1,4}/g)?.join("-") || code
+         console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
+      }, 3000)
+   }
+//------------------------------------------------------
+    FuadXyro.ev.on("connection.update",async  (s) => {
+        const { connection, lastDisconnect } = s
+        if (connection == "open") {
+            await delay(1000 * 10)
+            await FuadXyro.sendMessage(FuadXyro.user.id, { text: `FuadXyro` });
+            let fuad = fs.readFileSync('./sessions/creds.json');
+            await delay(1000 * 2) 
+             const fuadxy = await  FuadXyro.sendMessage(FuadXyro.user.id, { document: fuad, mimetype: `application/json`, fileName: `creds.json` })
+             await FuadXyro.sendMessage(FuadXyro.user.id, { text: `⚠️Jangan bagikan file ini dengan siapa pun⚠️\n
+┌─❖
+│ Hai Selamat Tahun Baru !
+└┬❖  
+┌┤✑  PAIRING CODE BY FUADXYRO
+│└────────────┈ ⳹        
+│©2020-2024 FuadXyro 
+└─────────────────┈ ⳹\n\n ` }, {quoted: fuadxy});
+              await delay(1000 * 2) 
+              process.exit(0)
+        }
+        if (
+            connection === "close" &&
+            lastDisconnect &&
+            lastDisconnect.error &&
+            lastDisconnect.error.output.statusCode != 401
+        ) {
+            qr()
+        }
+    })
+    FuadXyro.ev.on('creds.update', saveCreds)
+    FuadXyro.ev.on("messages.upsert",  () => { })
+}
+qr()
+
+process.on('uncaughtException', function (err) {
+let e = String(err)
+if (e.includes("Socket connection timeout")) return
+if (e.includes("rate-overlimit")) return
+if (e.includes("Connection Closed")) return
+if (e.includes("Timed Out")) return
+if (e.includes("Value not found")) return
+console.log('Caught exception: ', err)
+})
